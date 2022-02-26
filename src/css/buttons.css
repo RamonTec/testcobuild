@@ -1,0 +1,42 @@
+.button-logout, .button-save {
+  color: white;
+  background: #0099CC;
+  border: 2px solid #0099CC;
+  border-radius: 6px;
+  width: 70px;
+  height: 30px;
+}
+
+.button-update {
+  background-color:green;
+}
+
+.button-cancel {
+  background-color: red;
+}
+
+.button-update, .button-cancel {
+  color: white;
+  border: 1px solid #b8bfc2;
+  border-radius: 6px;
+  width: 70px;
+  height: 30px;
+  margin-right: 2px;
+}
+
+.button-save {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.button-logout:hover, .button-save:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.buttons-modal {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

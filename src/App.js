@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { AppProvider } from '8base-react-sdk';
+import { Auth, AUTH_STRATEGIES } from '@8base/auth';
+import { Authorization } from './components/Authorization';
+import { CircularProgress } from '@material-ui/core'
+import "./css/spinners.css"
 
-function App() {
+const REDIRECT_URI = document.location.href.replace(document.location.hash, '');
+
+const authClient = Auth.createClient({
+  strategy: AUTH_STRATEGIES.WEB_COGNITO,
+  subscribable: true,
+}, {
+  clientId: process.env.REACT_APP_8BASE_CLIENT_ID,
+  domain: process.env.REACT_APP_8BASE_CLIENT_DOMAIN,
+
+  redirectUri: REDIRECT_URI,
+  logoutRedirectUri: REDIRECT_URI,
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+    <AppProvider uri={process.env.REACT_APP_8BASE_API_ENDPOINT_URI} authClient={authClient}>
+      { ({ loading }) => {
+        if (loading) {
+          return (
+            <div className="spinner-center">
+              <CircularProgress />
+            </div>
+          )
+        }
+
+        return (
+          <React.Fragment>
+            <Authorization />
+          </React.Fragment>
+        );
+      }}
+    </AppProvider>
+  );
+};
+
+export {App};
