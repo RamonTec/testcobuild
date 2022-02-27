@@ -4,14 +4,12 @@ import {
   Checkbox
 } from '@material-ui/core';
 import "../css/taskItem.css"
+import "../css/spinners.css"
 
-function Cards(props) {
-
-  const [checked, setChecked] = React.useState(false);
+function Task(props) {
 
   //set status
   const handleChange = (event,item) => {
-    setChecked(event.target.checked);
     stateChanger(item)
   };
 
@@ -24,7 +22,8 @@ function Cards(props) {
     props.funDel({
       variables: { filter },
     }).then((res) => {
-      props.refetchFun(true);
+      props.refetchFun(true)
+      props.loadingState(true)
     }).catch(err => {
       console.log(err)
     });
@@ -42,6 +41,7 @@ function Cards(props) {
       variables: { data, filter  }
     }).then((res) => {
       props.refetchFun(true);
+      props.loadingState(true)
     }).catch(err => {
       console.log(err)
     });
@@ -59,7 +59,7 @@ function Cards(props) {
           <Button onClick={() => props.handleCloseFunction(props.item)} color="primary">Editar</Button>
           <Button onClick={() => deleteTask(props)} color="secondary">Eliminar</Button>
           <Checkbox
-            checked={checked}
+            checked={props.item.status}
             onChange={(e) => handleChange(e,props.item)}
             inputProps={{ 'aria-label': 'primary checkbox' }}
           />
@@ -71,4 +71,4 @@ function Cards(props) {
   );
 }
 
-export { Cards }
+export { Task }

@@ -9,12 +9,15 @@ import { GET_TASK, CREATE_TASK, DEL_TASK, EDIT_TASK } from '../graphql/task';
 import { GET_USER } from '../graphql/user';
 
 import { NewTask } from './NewTask';
-import { Cards } from './Task';
+import { Task } from './Task';
 import { UpdateTask } from './UpdateTask';
 import { ButtonLogout } from "./Button"
 
+import { CircularProgress } from '@material-ui/core'
+
 import "../css/taskItem.css"
 import "../css/titles.css"
+import "../css/spinners.css"
 
 function Tasks(props) {
 
@@ -24,17 +27,17 @@ function Tasks(props) {
   const [isRefetch, setIsRefetch] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { loading: LoadingTask, error, data, refetch } = useQuery(GET_TASK, {
+  const { error, data, refetch } = useQuery(GET_TASK, {
     fecthPolicy: "no-cache",
   });
 
-  const { loading: LoadingUser, error: errorUser, data: dataUser } = useQuery(GET_USER, {
+  const { error: errorUser, data: dataUser } = useQuery(GET_USER, {
     fecthPolicy: "no-cache",
   });
 
   const [newTask] = useMutation(CREATE_TASK, {
     onCompleted: data => {
-      setLoading(false);
+      setLoading(false)
     }
   });
 
@@ -52,16 +55,18 @@ function Tasks(props) {
 
   const [changeStateTask] = useMutation(EDIT_TASK, {
     onCompleted: data => {
-      setLoading(false);
+      setLoading(false)
     }
   });
 
   const handleClose = (data) => {
+    
     if (data && data.id) {
       setDataModal(data)
     }
     setOpenModal(!openModal);
   }
+
   useEffect(() => {
     if (data && data.tasksList) {
       let tasks = data.tasksList.items;
@@ -71,13 +76,10 @@ function Tasks(props) {
     if (isRefetch) {
       refetch()
       setIsRefetch(false)
+      setLoading(false)
     }
 
-    if (LoadingTask || LoadingUser) {
-      return <h1>Cargando</h1>
-    }
-
-  }, [LoadingTask, data, error, isRefetch, LoadingUser, errorUser, dataUser, refetch]);
+  }, [data, error, isRefetch, errorUser, dataUser, refetch]);
   return (
     <div>
 
@@ -87,33 +89,28 @@ function Tasks(props) {
       
       <Grid container spacing={2}>
         <Grid
-          item
           md={12}
         >
-          <p className="title-create-task">
-            Crear tarea
-          </p>
 
           <NewTask 
-            newTask={newTask} 
-            logoutFun={props.logoutFunction} 
+            newTask={newTask}
             loadingState={setLoading} 
             refetchFun={setIsRefetch} 
           />
         </Grid>
 
         <Grid
-          item
           md={12}
           ccontainer justifyContent="flex-end" direction="row"
         >
           {!!task && task.map((item, i) => {
             return (
               <Grid spacing={2}>
-                <Cards
+                <Task
                   item={item}
                   editFun={setOpenModal}
                   handleCloseFunction={handleClose}
+                  loadingState={setLoading} 
                   refetchFun={setIsRefetch}
                   funDel={delTask}
                   ifButtonOn={true}
@@ -127,11 +124,18 @@ function Tasks(props) {
 
       <UpdateTask 
         sendDataEdit={ediTask} 
-        refetchFun={setIsRefetch} 
+        refetchFun={setIsRefetch}
+        loadingState={setLoading} 
         open={openModal} 
         datosForm={dataModal} 
         handleCloseFunction={handleClose} 
       />
+
+      { loading === true && (
+        <div className="spinner-center">
+          <CircularProgress />
+        </div>
+      )}
     </div>
   );
 }

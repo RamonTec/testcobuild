@@ -21,14 +21,14 @@ function NewTask(props) {
     });
   }
 
-  const onChangeTodo = (event) => {
+  const onChangeTask = (event) => {
     setNewTask(event.target.value)
   }
 
   return (
-    <form onSubmit={onAddTask}>
+    <form className="form-new-task" onSubmit={onAddTask}>
       <textarea
-        onChange={onChangeTodo}
+        onChange={onChangeTask}
         value={newTaskValue}
         placeholder="Escribe la nueva tarea"
       />
