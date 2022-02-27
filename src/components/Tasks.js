@@ -27,6 +27,7 @@ function Tasks(props) {
   const [isRefetch, setIsRefetch] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
+  // Consultas de grahpql, obtener tareas, usuario, crear tareas, eliminar tareas, editar tareas
   const { error, data, refetch } = useQuery(GET_TASK, {
     fecthPolicy: "no-cache",
   });
@@ -68,11 +69,12 @@ function Tasks(props) {
   }
 
   useEffect(() => {
+    // verifico la data, caso tal seteo la que llega
     if (data && data.tasksList) {
-      let tasks = data.tasksList.items;
-      setTask(tasks);
+      setTask(data.tasksList.items);
     }
 
+    // Verifico
     if (isRefetch) {
       refetch()
       setIsRefetch(false)

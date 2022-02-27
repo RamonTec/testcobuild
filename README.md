@@ -1,3 +1,19 @@
+## Estructura del proyecto
+src => Donde esta alojado componentes, estilos, graphql, mocks de pruebas y jest
+__mocks__ => Carpeta necesaria para la configuracion y corrida de pruebas
+__test__ => Carpeta donde estan alojadas las pruebas del proyecto, la convencion usada es:
+tenemos una carpeta components donde van los archivos que queramos probar:
+__test__/components/Inicio.test.ts
+Lo ideal es que si el archivo se llama Inicio debemos de tener un componente que coinicida con la inicial del
+nombre del archivo de pruebas.
+
+src/components => Aca se encuentran todos los componentes del proyecto
+src/css => Los estilos usados en el proyecto
+src/graphql => Creacion de graphql, queris, mutations
+
+index.js que inicia toda la aplicacion.
+
+El archivo babelrc => Necesario para poder correr las pruebas unitarias de jest
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -8,7 +8,8 @@ function UpdateTask(props) {
 
   const [updateTask, setUpdateTask] = React.useState('')
 
-  const addNewTask = (event) => {
+  // Metodo encargado de modificar la tarea seleccionada
+  const updateTaskForm = (event) => {
     event.preventDefault()
     
     let data = {
@@ -32,13 +33,14 @@ function UpdateTask(props) {
 
   }
 
+  // Funcion que recibe el evento nuevo (lo que ingresa en el input) y llama setUpdateTask para actualizar el estado
   const onChangeTask = (event) => {
     setUpdateTask(event.target.value)
   }
 
   const body = (
     <div className="center-form-new-task">
-      <form onSubmit={addNewTask}> 
+      <form onSubmit={updateTaskForm}> 
 
         <textarea
           onChange={onChangeTask}
@@ -67,7 +69,7 @@ function UpdateTask(props) {
     </div>
 
   );
-  //retorno a la vista task el componente modal
+  
   return (
     <div>
       <Modal
