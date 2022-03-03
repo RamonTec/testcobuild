@@ -30,15 +30,9 @@ function Task(props) {
   }
   
   const stateChanger = (item) => {
-    let data = {
-      status: !item.status,
-    }
-    let filter = {
-      id: item.id,
-    }
     props.stateFunction({
       
-      variables: { data, filter  }
+      variables: { id: item.id, status: !item.status  }
     }).then((res) => {
       props.refetchFun(true);
       props.loadingState(true)

@@ -12,6 +12,8 @@ export const GET_TASK = gql`
   }
 `;
 
+
+//Mutations 
 export const CREATE_TASK = gql`
   mutation TaskCreate($data: TaskCreateInput!) {
     taskCreate(data: $data) {
@@ -35,3 +37,11 @@ export const DEL_TASK = gql`
     }
   }
 `;
+
+export const CHANGE_STATE = gql`
+  mutation stateChanger($id: ID, $status: Boolean) {
+    changeState(id: $id, status: $status) {
+      success
+    }
+  }
+`

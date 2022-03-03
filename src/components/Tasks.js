@@ -5,7 +5,7 @@ import {
   Grid
 } from '@material-ui/core';
 
-import { GET_TASK, CREATE_TASK, DEL_TASK, EDIT_TASK } from '../graphql/task';
+import { GET_TASK, CREATE_TASK, DEL_TASK, EDIT_TASK, CHANGE_STATE } from '../graphql/task';
 import { GET_USER } from '../graphql/user';
 
 import { NewTask } from './NewTask';
@@ -54,8 +54,9 @@ function Tasks(props) {
     }
   });
 
-  const [changeStateTask] = useMutation(EDIT_TASK, {
+  const [changeStateTask] = useMutation(CHANGE_STATE, {
     onCompleted: data => {
+      console.log(data)
       setLoading(false)
     }
   });
